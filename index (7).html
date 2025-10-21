@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMP Negeri 2 Siwalan - Pendaftaran Siswa Baru</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827;
+            color: #E5E7EB;
+        }
+        .font-poppins {
+            font-family: 'Poppins', sans-serif;
+        }
+        .hero-bg {
+            background-image: url('https://placehold.co/1920x1080/374151/E5E7EB?text=Suasana+Kelas');
+            background-size: cover;
+            background-position: center;
+        }
+        /* Styling untuk jawaban dari Gemini */
+        #gemini-answer p {
+            margin-bottom: 1rem;
+        }
+        #gemini-answer ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+         #gemini-answer li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="text-white">
+
+    <!-- Wrapper Utama -->
+    <div class="min-h-screen flex flex-col">
+
+        <!-- Header -->
+        <header class="bg-black/30 backdrop-blur-sm fixed top-0 left-0 right-0 z-50">
+            <!-- Top Bar -->
+            <div class="bg-gray-900/50 text-xs text-gray-300">
+                <div class="container mx-auto px-6 py-2 flex justify-between items-center">
+                    <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-1">
+                            <i data-lucide="phone" class="w-3 h-3 text-yellow-400"></i>
+                            <span>Informasi Pendaftaran: 081332428433</span>
+                        </div>
+                        <div class="hidden md:flex items-center gap-1">
+                             <i data-lucide="mail" class="w-3 h-3 text-yellow-400"></i>
+                            <span>email: iibsalz@gmail.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Navigation -->
+            <nav class="container mx-auto px-6 py-3">
+                <div class="flex justify-between items-center">
+                    <!-- Logo -->
+                    <a href="#" class="flex items-center gap-2" data-target="home-content">
+                        <img src="https://placehold.co/50x50/16a34a/FFFFFF?text=S2S" alt="Logo SMP Negeri 2 Siwalan" class="h-10 w-10 border-2 border-yellow-400 rounded-md">
+                        <div>
+                            <h1 class="text-sm font-bold font-poppins text-white">SMP NEGERI 2 SIWALAN</h1>
+                            <p class="text-xs text-gray-300">SEKOLAH PENGGERAK</p>
+                        </div>
+                    </a>
+
+                    <!-- Desktop Menu -->
+                    <ul class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+                        <li><a href="#" data-target="home-content" class="hover:text-yellow-400 transition-colors duration-300 border-b-2 border-yellow-400 pb-1">HOME</a></li>
+                        
+                        <!-- Profil Dropdown -->
+                        <li class="relative group">
+                            <a href="#" class="hover:text-yellow-400 transition-colors duration-300 flex items-center">
+                                PROFIL <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i>
+                            </a>
+                            <div class="absolute hidden bg-gray-800 rounded-md shadow-lg mt-2 py-2 w-48">
+                                <a href="#" data-target="tentang-kami-section" class="block px-4 py-2 text-sm text-gray-300 hover:bg-yellow-500 hover:text-gray-900">TENTANG KAMI</a>
+                                <a href="#" data-target="visi-misi-section" class="block px-4 py-2 text-sm text-gray-300 hover:bg-yellow-500 hover:text-gray-900">VISI MISI</a>
+                                <a href="#" data-target="guru-staf-section" class="block px-4 py-2 text-sm text-gray-300 hover:bg-yellow-500 hover:text-gray-900">GURU & STAF</a>
+                            </div>
+                        </li>
+
+                        <!-- Kegiatan Dropdown -->
+                        <li class="relative group">
+                            <a href="#" class="hover:text-yellow-400 transition-colors duration-300 flex items-center">
+                                KEGIATAN <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i>
+                            </a>
+                            <div class="absolute hidden bg-gray-800 rounded-md shadow-lg mt-2 py-2 w-48">
+                                <a href="#" data-target="prestasi-section" class="block px-4 py-2 text-sm text-gray-300 hover:bg-yellow-500 hover:text-gray-900">PRESTASI</a>
+                                <a href="#" data-target="ekstrakurikuler-section" class="block px-4 py-2 text-sm text-gray-300 hover:bg-yellow-500 hover:text-gray-900">EKSTRAKURIKULER</a>
+                                <a href="#" data-target="gallery-section" class="block px-4 py-2 text-sm text-gray-300 hover:bg-yellow-500 hover:text-gray-900">GALLERY</a>
+                            </div>
+                        </li>
+
+                        <li><a href="#" data-target="pendaftaran-section" class="hover:text-yellow-400 transition-colors duration-300">PENDAFTARAN</a></li>
+                        <li><a href="#" data-target="lokasi-section" class="hover:text-yellow-400 transition-colors duration-300">LOKASI</a></li>
+                    </ul>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="menu-btn" class="lg:hidden">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </nav>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden lg:hidden px-6 pb-4 bg-gray-900/90 backdrop-blur-sm">
+                 <ul class="flex flex-col space-y-4 text-sm font-medium pt-4">
+                    <li><a href="#" data-target="home-content" class="block hover:text-yellow-400 transition-colors duration-300">HOME</a></li>
+                    <li><span class="font-bold text-yellow-400">PROFIL</span></li>
+                    <li class="ml-4"><a href="#" data-target="tentang-kami-section" class="block hover:text-yellow-400 transition-colors duration-300">TENTANG KAMI</a></li>
+                    <li class="ml-4"><a href="#" data-target="visi-misi-section" class="block hover:text-yellow-400 transition-colors duration-300">VISI MISI</a></li>
+                    <li class="ml-4"><a href="#" data-target="guru-staf-section" class="block hover:text-yellow-400 transition-colors duration-300">GURU & STAF</a></li>
+                    <li><span class="font-bold text-yellow-400">KEGIATAN</span></li>
+                    <li class="ml-4"><a href="#" data-target="prestasi-section" class="block hover:text-yellow-400 transition-colors duration-300">PRESTASI</a></li>
+                    <li class="ml-4"><a href="#" data-target="ekstrakurikuler-section" class="block hover:text-yellow-400 transition-colors duration-300">EKSTRAKURIKULER</a></li>
+                    <li class="ml-4"><a href="#" data-target="gallery-section" class="block hover:text-yellow-400 transition-colors duration-300">GALLERY</a></li>
+                    <li><a href="#" data-target="pendaftaran-section" class="block hover:text-yellow-400 transition-colors duration-300">PENDAFTARAN</a></li>
+                    <li><a href="#" data-target="lokasi-section" class="block hover:text-yellow-400 transition-colors duration-300">LOKASI</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-grow">
+            <!-- Home Content Wrapper -->
+            <div id="home-content" class="content-section">
+                <!-- Hero Section -->
+                <section class="hero-bg relative h-[calc(100vh-200px)] min-h-[500px] mt-24">
+                    <div class="absolute inset-0 bg-black/60"></div>
+                    <div class="relative z-10 container mx-auto px-6 h-full flex flex-col justify-center text-left">
+                        <p class="text-yellow-400 font-semibold font-poppins">Pendaftaran</p>
+                        <h2 class="text-4xl md:text-6xl lg:text-7xl font-bold font-poppins leading-tight mt-2 text-white">
+                            Siswa Baru <br> SMP Negeri 2 Siwalan
+                        </h2>
+                        <p class="text-2xl md:text-3xl font-poppins mt-3 text-gray-200">TA 2023, 2024, 2025</p>
+                        <a href="#" data-target="pendaftaran-section" class="mt-8 bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-md w-fit hover:bg-yellow-500 transition-colors duration-300 shadow-lg">
+                            DAFTAR
+                        </a>
+                    </div>
+                </section>
+                
+                <!-- Features Section -->
+                <section class="bg-gray-900/50">
+                    <div class="container mx-auto px-6 -mt-16 relative z-20">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <!-- Card 1 -->
+                            <div class="bg-gray-800/80 backdrop-blur-md p-6 rounded-lg border border-gray-700 flex items-center gap-5">
+                                <div class="bg-yellow-400/10 p-4 rounded-full text-yellow-400">
+                                    <i data-lucide="star" class="w-8 h-8"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold font-poppins">BORN TO BE A LEADER</h3>
+                                    <a href="#" class="text-xs text-yellow-400 hover:underline mt-1 inline-block">VIEW MORE ></a>
+                                </div>
+                            </div>
+                             <!-- Card 2 -->
+                            <div class="bg-gray-800/80 backdrop-blur-md p-6 rounded-lg border border-gray-700 flex items-center gap-5">
+                                <div class="bg-yellow-400/10 p-4 rounded-full text-yellow-400">
+                                    <i data-lucide="book-open-check" class="w-8 h-8"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold font-poppins">GREAT ACHIEVEMENT</h3>
+                                    <a href="#" data-target="prestasi-section" class="text-xs text-yellow-400 hover:underline mt-1 inline-block">VIEW MORE ></a>
+                                </div>
+                            </div>
+                             <!-- Card 3 -->
+                            <div class="bg-gray-800/80 backdrop-blur-md p-6 rounded-lg border border-gray-700 flex items-center gap-5">
+                                <div class="bg-yellow-400/10 p-4 rounded-full text-yellow-400">
+                                    <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold font-poppins">STUDENT ADMISSION</h3>
+                                    <a href="#" data-target="pendaftaran-section" class="text-xs text-yellow-400 hover:underline mt-1 inline-block">VIEW MORE ></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Gemini Q&A Section -->
+                <section id="gemini-qa" class="py-20 bg-gray-900">
+                    <div class="container mx-auto px-6 text-center">
+                        <h2 class="text-3xl font-bold font-poppins mb-4">✨ Tanya Jawab Cerdas</h2>
+                        <p class="text-gray-400 mb-8 max-w-2xl mx-auto">Punya pertanyaan seputar pendaftaran, kurikulum, atau kehidupan di SMP Negeri 2 Siwalan? Tanyakan pada asisten virtual kami!</p>
+                        <div class="max-w-3xl mx-auto">
+                            <div class="bg-gray-800 rounded-lg p-2 flex flex-col sm:flex-row gap-2">
+                                <input type="text" id="question-input" placeholder="Contoh: Apa saja kegiatan ekstrakurikuler yang ada?" class="w-full bg-gray-700 text-white placeholder-gray-400 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400 border-none">
+                                <button id="ask-button" class="bg-yellow-400 text-gray-900 font-bold py-3 px-6 rounded-md hover:bg-yellow-500 transition-colors duration-300 flex items-center justify-center gap-2">
+                                    <i data-lucide="send" class="w-5 h-5"></i>
+                                    <span>Tanya</span>
+                                </button>
+                            </div>
+                            <div id="gemini-answer-container" class="mt-8 text-left bg-gray-800/50 rounded-lg p-6 border border-gray-700 min-h-[100px] hidden">
+                                <div id="gemini-answer-loader" class="flex items-center justify-center">
+                                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-yellow-400"></div>
+                                    <p class="ml-4 text-gray-300">Asisten sedang berpikir...</p>
+                                </div>
+                                <div id="gemini-answer" class="text-gray-300 leading-relaxed"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Tentang Kami Section -->
+            <section id="tentang-kami-section" class="content-section hidden py-20 pt-32 bg-gray-900">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-3xl font-bold font-poppins text-center mb-12">Tentang SMP Negeri 2 Siwalan</h2>
+                    <div class="flex flex-col md:flex-row gap-12 items-center">
+                        <div class="md:w-1/2">
+                            <img src="https://placehold.co/600x400/16a34a/FFFFFF?text=Gedung+Sekolah" alt="Tentang Kami" class="rounded-lg shadow-lg w-full">
+                        </div>
+                        <div class="md:w-1/2 text-gray-300 leading-relaxed">
+                            <p class="mb-4">SMP Negeri 2 Siwalan adalah lembaga pendidikan negeri yang berlokasi di jantung Kota Inspirasi. Didirikan pada tahun 2005, kami berkomitmen untuk menyediakan pendidikan berkualitas yang mengintegrasikan kurikulum nasional dengan nilai-nilai luhur, serta penguasaan teknologi informasi.</p>
+                            <p class="mb-4">Dengan fasilitas modern, lingkungan yang asri, dan tenaga pengajar yang berdedikasi, kami bertujuan untuk mencetak generasi pemimpin masa depan yang tidak hanya unggul dalam bidang akademis dan teknologi, tetapi juga memiliki akhlak mulia dan karakter yang kuat.</p>
+                             <p>Kami percaya bahwa setiap siswa memiliki potensi unik, dan tugas kami adalah membimbing mereka untuk menemukan dan mengembangkan potensi tersebut secara maksimal.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Visi Misi Section -->
+            <section id="visi-misi-section" class="content-section hidden py-20 pt-32 bg-gray-900/50">
+                <div class="container mx-auto px-6 text-center">
+                    <h2 class="text-3xl font-bold font-poppins mb-12">Visi & Misi</h2>
+                    <div class="grid md:grid-cols-2 gap-10 text-left">
+                        <div class="bg-gray-800 p-8 rounded-lg border border-gray-700">
+                            <div class="flex items-center gap-4 mb-4">
+                                <i data-lucide="eye" class="w-10 h-10 text-yellow-400"></i>
+                                <h3 class="text-2xl font-bold font-poppins">Visi Kami</h3>
+                            </div>
+                            <p class="text-gray-300">Menjadi lembaga pendidikan Islam bertaraf internasional yang terdepan dalam mencetak generasi pemimpin yang qur'ani, cerdas, mandiri, dan berakhlak mulia.</p>
+                        </div>
+                        <div class="bg-gray-800 p-8 rounded-lg border border-gray-700">
+                           <div class="flex items-center gap-4 mb-4">
+                                <i data-lucide="rocket" class="w-10 h-10 text-yellow-400"></i>
+                                <h3 class="text-2xl font-bold font-poppins">Misi Kami</h3>
+                            </div>
+                            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                                <li>Menyelenggarakan pendidikan yang memadukan iman, ilmu, dan amal.</li>
+                                <li>Mengembangkan potensi akademik, kepemimpinan, dan kewirausahaan santri.</li>
+                                <li>Menciptakan lingkungan belajar yang islami, modern, dan kondusif.</li>
+                                <li>Membina santri untuk hafal Al-Qur'an dan fasih berbahasa Arab & Inggris.</li>
+                                <li>Menjalin kemitraan strategis dengan lembaga pendidikan di dalam dan luar negeri.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Guru & Staf Section -->
+            <section id="guru-staf-section" class="content-section hidden py-20 pt-32 bg-gray-900">
+                <div class="container mx-auto px-6 text-center">
+                    <h2 class="text-3xl font-bold font-poppins mb-12">Guru & Staf Pengajar</h2>
+                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                        <!-- Sample Card -->
+                        <div class="bg-gray-800 p-6 rounded-lg text-center border border-gray-700 transform hover:-translate-y-2 transition-transform duration-300">
+                            <img src="https://placehold.co/150x150/4ade80/1f2937?text=Foto" alt="Nama Guru" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-yellow-400">
+                            <h4 class="font-bold text-lg font-poppins">Ust. Dr. Ahmad Zaky, M.Pd.</h4>
+                            <p class="text-yellow-400 text-sm">Kepala Sekolah</p>
+                            <p class="text-xs text-gray-400 mt-2">Lulusan Universitas Al-Azhar, Kairo. Ahli di bidang Tafsir dan Ilmu Al-Qur'an.</p>
+                        </div>
+                        <div class="bg-gray-800 p-6 rounded-lg text-center border border-gray-700 transform hover:-translate-y-2 transition-transform duration-300">
+                            <img src="https://placehold.co/150x150/4ade80/1f2937?text=Foto" alt="Nama Guru" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-yellow-400">
+                            <h4 class="font-bold text-lg font-poppins">Ust. Abdullah, Lc.</h4>
+                            <p class="text-yellow-400 text-sm">Guru Bahasa Arab</p>
+                            <p class="text-xs text-gray-400 mt-2">Lulusan Universitas Islam Madinah. Berpengalaman mengajar lebih dari 10 tahun.</p>
+                        </div>
+                        <div class="bg-gray-800 p-6 rounded-lg text-center border border-gray-700 transform hover:-translate-y-2 transition-transform duration-300">
+                            <img src="https://placehold.co/150x150/4ade80/1f2937?text=Foto" alt="Nama Guru" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-yellow-400">
+                            <h4 class="font-bold text-lg font-poppins">Mr. John Doe, S.Kom.</h4>
+                            <p class="text-yellow-400 text-sm">Guru TIK & Robotika</p>
+                             <p class="text-xs text-gray-400 mt-2">Profesional IT dengan sertifikasi internasional. Pembina klub robotika.</p>
+                        </div>
+                        <div class="bg-gray-800 p-6 rounded-lg text-center border border-gray-700 transform hover:-translate-y-2 transition-transform duration-300">
+                            <img src="https://placehold.co/150x150/4ade80/1f2937?text=Foto" alt="Nama Guru" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-yellow-400">
+                            <h4 class="font-bold text-lg font-poppins">Ust. Farhan Ali, S.Ag.</h4>
+                            <p class="text-yellow-400 text-sm">Guru Fiqih & Hadits</p>
+                            <p class="text-xs text-gray-400 mt-2">Ahli dalam bidang fiqih perbandingan mazhab. Penulis beberapa buku islami.</p>
+                        </div>
+                     </div>
+                </div>
+            </section>
+            
+            <!-- Prestasi Section -->
+            <section id="prestasi-section" class="content-section hidden py-20 pt-32 bg-gray-900/50">
+                 <div class="container mx-auto px-6">
+                     <h2 class="text-3xl font-bold font-poppins text-center mb-12">Prestasi Siswa</h2>
+                     <div class="max-w-4xl mx-auto space-y-4">
+                        <div class="bg-gray-800 p-5 rounded-lg border border-gray-700 flex items-center gap-4">
+                            <div class="bg-yellow-400 text-gray-900 p-3 rounded-md"><i data-lucide="trophy" class="w-8 h-8"></i></div>
+                            <div>
+                                <h4 class="font-bold font-poppins">Juara 1 Lomba Robotika Nasional</h4>
+                                <p class="text-sm text-gray-400">Tahun 2024 - Diselenggarakan oleh Kemenristekdikti</p>
+                            </div>
+                        </div>
+                        <div class="bg-gray-800 p-5 rounded-lg border border-gray-700 flex items-center gap-4">
+                            <div class="bg-yellow-400 text-gray-900 p-3 rounded-md"><i data-lucide="award" class="w-8 h-8"></i></div>
+                            <div>
+                                <h4 class="font-bold font-poppins">Medali Emas Olimpiade Sains Internasional (Biologi)</h4>
+                                <p class="text-sm text-gray-400">Tahun 2024 - Diadakan di Singapura</p>
+                            </div>
+                        </div>
+                        <div class="bg-gray-800 p-5 rounded-lg border border-gray-700 flex items-center gap-4">
+                            <div class="bg-yellow-400 text-gray-900 p-3 rounded-md"><i data-lucide="book-marked" class="w-8 h-8"></i></div>
+                            <div>
+                                <h4 class="font-bold font-poppins">Juara Umum Musabaqah Hifzhil Qur'an Tingkat Provinsi</h4>
+                                <p class="text-sm text-gray-400">Tahun 2023 - Kategori 30 Juz</p>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+            </section>
+
+            <!-- Ekstrakurikuler Section -->
+            <section id="ekstrakurikuler-section" class="content-section hidden py-20 pt-32 bg-gray-900">
+                 <div class="container mx-auto px-6 text-center">
+                    <h2 class="text-3xl font-bold font-poppins mb-12">Ekstrakurikuler Unggulan</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="bg-gray-800 rounded-lg overflow-hidden border border-gray-700 group">
+                            <img src="https://placehold.co/400x250/34d399/1f2937?text=Futsal" alt="Futsal" class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300">
+                            <div class="p-4">
+                                <h4 class="font-bold font-poppins">Futsal & Sepak Bola</h4>
+                            </div>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg overflow-hidden border border-gray-700 group">
+                            <img src="https://placehold.co/400x250/34d399/1f2937?text=Robotika" alt="Robotika" class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300">
+                            <div class="p-4">
+                                <h4 class="font-bold font-poppins">Klub Robotika</h4>
+                            </div>
+                        </div>
+                         <div class="bg-gray-800 rounded-lg overflow-hidden border border-gray-700 group">
+                            <img src="https://placehold.co/400x250/34d399/1f2937?text=Kaligrafi" alt="Kaligrafi" class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300">
+                            <div class="p-4">
+                                <h4 class="font-bold font-poppins">Seni Kaligrafi</h4>
+                            </div>
+                        </div>
+                         <div class="bg-gray-800 rounded-lg overflow-hidden border border-gray-700 group">
+                            <img src="https://placehold.co/400x250/34d399/1f2937?text=Pramuka" alt="Pramuka" class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300">
+                            <div class="p-4">
+                                <h4 class="font-bold font-poppins">Pramuka & Survival</h4>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </section>
+
+             <!-- Gallery Section -->
+            <section id="gallery-section" class="content-section hidden py-20 pt-32 bg-gray-900/50">
+                <div class="container mx-auto px-6 text-center">
+                    <h2 class="text-3xl font-bold font-poppins mb-12">Galeri Kegiatan</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        <img src="https://placehold.co/400x300/fbbf24/1f2937?text=Kegiatan+1" alt="Galeri" class="rounded-lg shadow-lg hover:opacity-80 transition-opacity duration-300">
+                         <img src="https://placehold.co/400x300/fbbf24/1f2937?text=Kegiatan+2" alt="Galeri" class="rounded-lg shadow-lg hover:opacity-80 transition-opacity duration-300">
+                         <img src="https://placehold.co/400x300/fbbf24/1f2937?text=Kegiatan+3" alt="Galeri" class="rounded-lg shadow-lg hover:opacity-80 transition-opacity duration-300">
+                         <img src="https://placehold.co/400x300/fbbf24/1f2937?text=Kegiatan+4" alt="Galeri" class="rounded-lg shadow-lg hover:opacity-80 transition-opacity duration-300">
+                         <img src="https://placehold.co/400x300/fbbf24/1f2937?text=Kegiatan+5" alt="Galeri" class="rounded-lg shadow-lg hover:opacity-80 transition-opacity duration-300">
+                         <img src="https://placehold.co/400x300/fbbf24/1f2937?text=Kegiatan+6" alt="Galeri" class="rounded-lg shadow-lg hover:opacity-80 transition-opacity duration-300">
+                         <img src="https://placehold.co/400x300/fbbf24/1f2937?text=Kegiatan+7" alt="Galeri" class="rounded-lg shadow-lg hover:opacity-80 transition-opacity duration-300">
+                         <img src="https://placehold.co/400x300/fbbf24/1f2937?text=Kegiatan+8" alt="Galeri" class="rounded-lg shadow-lg hover:opacity-80 transition-opacity duration-300">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Placeholder for Pendaftaran & Lokasi -->
+            <section id="pendaftaran-section" class="content-section hidden py-20 pt-32 bg-gray-900"></section>
+            <section id="lokasi-section" class="content-section hidden py-20 pt-32 bg-gray-900/50"></section>
+
+        </main>
+        
+        <!-- Footer -->
+        <footer class="bg-gray-900/50 border-t border-gray-800">
+             <div class="container mx-auto px-6 py-8">
+                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                     <div>
+                         <a href="#" class="flex items-center gap-2 mb-4">
+                            <img src="https://placehold.co/50x50/16a34a/FFFFFF?text=S2S" alt="Logo SMP Negeri 2 Siwalan" class="h-10 w-10 border-2 border-yellow-400 rounded-md">
+                            <div>
+                                <h1 class="text-sm font-bold font-poppins text-white">SMP NEGERI 2 SIWALAN</h1>
+                                <p class="text-xs text-gray-300">SEKOLAH PENGGERAK</p>
+                            </div>
+                        </a>
+                        <p class="text-sm text-gray-400">Sekolah menengah pertama negeri yang mencetak generasi pemimpin masa depan.</p>
+                     </div>
+                     <div>
+                         <h4 class="font-bold mb-4 text-white">Tautan Cepat</h4>
+                         <ul class="space-y-2 text-sm text-gray-400">
+                            <li><a href="#" data-target="visi-misi-section" class="hover:text-yellow-400">Visi & Misi</a></li>
+                            <li><a href="#" data-target="pendaftaran-section" class="hover:text-yellow-400">Pendaftaran</a></li>
+                            <li><a href="#" data-target="gallery-section" class="hover:text-yellow-400">Gallery</a></li>
+                            <li><a href="#" data-target="lokasi-section" class="hover:text-yellow-400">Lokasi</a></li>
+                         </ul>
+                     </div>
+                     <div>
+                         <h4 class="font-bold mb-4 text-white">Hubungi Kami</h4>
+                         <ul class="space-y-2 text-sm text-gray-400">
+                            <li class="flex items-start gap-2"><i data-lucide="map-pin" class="w-4 h-4 mt-1 text-yellow-400 flex-shrink-0"></i><span>Jl. Pendidikan No. 1, Kota Inspirasi, Indonesia</span></li>
+                             <li class="flex items-start gap-2"><i data-lucide="phone" class="w-4 h-4 mt-1 text-yellow-400 flex-shrink-0"></i><span>081332428433</span></li>
+                             <li class="flex items-start gap-2"><i data-lucide="mail" class="w-4 h-4 mt-1 text-yellow-400 flex-shrink-0"></i><span>iibsalz@gmail.com</span></li>
+                         </ul>
+                     </div>
+                     <div>
+                        <h4 class="font-bold mb-4 text-white">Ikuti Media Sosial</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-400 hover:text-yellow-400"><i data-lucide="facebook" class="w-6 h-6"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-yellow-400"><i data-lucide="instagram" class="w-6 h-6"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-yellow-400"><i data-lucide="youtube" class="w-6 h-6"></i></a>
+                        </div>
+                     </div>
+                 </div>
+                 <div class="mt-8 border-t border-gray-700 pt-6 text-center text-sm text-gray-500">
+                     <p>&copy; 2025 SMP Negeri 2 Siwalan. Seluruh hak cipta dilindungi.</p>
+                 </div>
+             </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Gemini API Feature
+        const askButton = document.getElementById('ask-button');
+        const questionInput = document.getElementById('question-input');
+        const answerContainer = document.getElementById('gemini-answer-container');
+        const geminiAnswerEl = document.getElementById('gemini-answer');
+        const loader = document.getElementById('gemini-answer-loader');
+
+        const callGeminiApi = async (userQuestion) => {
+            answerContainer.style.display = 'block';
+            geminiAnswerEl.style.display = 'none';
+            loader.style.display = 'flex';
+            geminiAnswerEl.innerHTML = '';
+
+            const apiKey = ""; // API Key akan di-handle secara otomatis
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+            const systemPrompt = "Anda adalah asisten virtual SMP Negeri 2 Siwalan yang ramah dan informatif. SMP Negeri 2 Siwalan adalah sebuah sekolah menengah pertama negeri. Jawab pertanyaan pengguna seputar pendaftaran, kurikulum, biaya, kegiatan ekstrakurikuler, fasilitas, dan kehidupan sehari-hari di sekolah. Selalu gunakan bahasa Indonesia yang sopan, jelas, dan profesional. Jika tidak tahu jawabannya, katakan bahwa Anda tidak memiliki informasi tersebut dan sarankan untuk menghubungi nomor pendaftaran resmi.";
+            
+            const payload = {
+                contents: [{ parts: [{ text: userQuestion }] }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+                 tools: [{ "google_search": {} }],
+            };
+
+            try {
+                 const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                
+                let text = 'Maaf, terjadi sedikit kendala saat mencoba menjawab. Silakan coba lagi.';
+                if (result.candidates && result.candidates.length > 0 && result.candidates[0].content?.parts?.[0]?.text) {
+                    text = result.candidates[0].content.parts[0].text;
+                }
+
+                geminiAnswerEl.innerHTML = text.replace(/\n/g, '<br>');
+
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                geminiAnswerEl.textContent = 'Maaf, sepertinya ada masalah koneksi. Mohon periksa kembali koneksi internet Anda dan coba lagi nanti.';
+            } finally {
+                loader.style.display = 'none';
+                geminiAnswerEl.style.display = 'block';
+            }
+        };
+
+        askButton.addEventListener('click', () => {
+            const question = questionInput.value.trim();
+            if (question) {
+                callGeminiApi(question);
+            }
+        });
+
+        questionInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const question = questionInput.value.trim();
+                if (question) {
+                    callGeminiApi(question);
+                }
+            }
+        });
+
+        // Page Navigation Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('a[data-target]');
+            const contentSections = document.querySelectorAll('.content-section');
+
+            const showSection = (targetId) => {
+                let sectionFound = false;
+                contentSections.forEach(section => {
+                    if (section.id === targetId) {
+                        section.classList.remove('hidden');
+                        sectionFound = true;
+                    } else {
+                        section.classList.add('hidden');
+                    }
+                });
+                
+                // Jika section tidak ada (mis. Pendaftaran, Lokasi), kembali ke home
+                if (!sectionFound) {
+                     document.getElementById('home-content').classList.remove('hidden');
+                }
+
+                window.scrollTo(0, 0); // Selalu scroll ke atas
+            };
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('data-target');
+                    showSection(targetId);
+
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+
+             // Set default view ke home
+            showSection('home-content');
+            
+            // --- Dropdown Menu Logic with Delay ---
+            const dropdownGroups = document.querySelectorAll('.relative.group');
+            dropdownGroups.forEach(group => {
+                const menu = group.querySelector('.absolute');
+                let hideTimeout;
+
+                const showMenu = () => {
+                    clearTimeout(hideTimeout);
+                    // Hide other open menus for a cleaner experience
+                    dropdownGroups.forEach(otherGroup => {
+                        const otherMenu = otherGroup.querySelector('.absolute');
+                        if (otherMenu && otherMenu !== menu) {
+                            otherMenu.classList.add('hidden');
+                        }
+                    });
+                    if (menu) {
+                        menu.classList.remove('hidden');
+                    }
+                };
+
+                const hideMenu = () => {
+                    hideTimeout = setTimeout(() => {
+                        if (menu) {
+                            menu.classList.add('hidden');
+                        }
+                    }, 200); // 200ms delay before hiding
+                };
+
+                group.addEventListener('mouseenter', showMenu);
+                group.addEventListener('mouseleave', hideMenu);
+            });
+        });
+
+    </script>
+
+</body>
+</html>
+
+
